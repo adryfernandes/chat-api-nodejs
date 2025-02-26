@@ -1,18 +1,16 @@
+import http from 'http';
 import { PORT } from './config/config';
-import express from 'express';
-import cors from 'cors';
-import { router } from './routes';
+import { createApp } from './app';
+import { initSocket } from './sockets';
 
 const startServer = () => {
   try {
-    const app = express();
+    const app = createApp();
+    const server = http.createServer(app);
 
-    app.use(express.json());
-    app.use(cors());
+    initSocket(server);
 
-    app.use('/api', router);
-
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       // eslint-disable-next-line no-console
       console.log(`Servidor iniciado na porta ${PORT}`);
     });
