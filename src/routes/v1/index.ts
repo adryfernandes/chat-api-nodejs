@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { routerV1 } from './v1';
+import { userRouter } from './userRouter';
 
 const router = Router();
 
@@ -7,6 +7,6 @@ router.get('/health', (_, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
-router.use('/v1', routerV1);
+router.use('/user', userRouter);
 
-export { router };
+export { router as routerV1 };

@@ -1,20 +1,19 @@
-import http from 'http';
-import { createApp } from './app';
-import { initSocket } from './socket';
 import { PORT } from './config/config';
+import express from 'express';
+import cors from 'cors';
+import { router } from './routes';
 
 const startServer = () => {
   try {
-    const app = createApp();
-    const server = http.createServer(app);
+    const app = express();
 
-    initSocket(server);
+    app.use(express.json());
+    app.use(cors());
 
-    server.setTimeout(10000, () => {
-      console.warn('[Timeout]: Conexão encerrada por inatividade.');
-    });
+    app.use('/api', router);
 
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
+      // eslint-disable-next-line no-console
       console.log(`Servidor iniciado na porta ${PORT}`);
     });
   } catch (error) {
