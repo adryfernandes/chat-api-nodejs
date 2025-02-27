@@ -1,18 +1,25 @@
-import { Request } from '@/interface';
-import { Signup } from '@/interface/request';
+import { SignupDto } from '@/database/dto';
+import { UserService } from '@/service/user/userService';
+import { Request } from '@/types';
+import { HttpStatusCode } from 'axios';
 import { NextFunction, Response } from 'express';
 
-class UserController {
-  signup(req: Request<undefined, undefined, Signup>, res: Response, next: NextFunction) {
+export class UserController {
+  static async signup(
+    req: Request<undefined, undefined, SignupDto>,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
       const { body } = req;
 
-      const input: Signup = {
-        username: body?.username?.trim()?.toLowerCase(),
-      };
+      const input = new SignupDto({ username: body?.username });
+
+      await UserService.signup(input);
+
+      res.sendStatus(HttpStatusCode.Ok);
     } catch (error) {
       next(error);
     }
   }
 }
-export default new UserController();

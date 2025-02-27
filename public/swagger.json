@@ -1,1 +1,299 @@
-{}
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserCreateData": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"username"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HttpStatusCode": {
+				"enum": [
+					100,
+					101,
+					102,
+					103,
+					200,
+					201,
+					202,
+					203,
+					204,
+					205,
+					206,
+					207,
+					208,
+					226,
+					300,
+					301,
+					302,
+					303,
+					304,
+					305,
+					306,
+					307,
+					308,
+					400,
+					401,
+					402,
+					403,
+					404,
+					405,
+					406,
+					407,
+					408,
+					409,
+					410,
+					411,
+					412,
+					413,
+					414,
+					415,
+					416,
+					417,
+					418,
+					421,
+					422,
+					423,
+					424,
+					425,
+					426,
+					428,
+					429,
+					431,
+					451,
+					500,
+					501,
+					502,
+					503,
+					504,
+					505,
+					506,
+					507,
+					508,
+					510,
+					511
+				],
+				"type": "number"
+			},
+			"ValidateError": {
+				"description": "Classe customizada para erros 400 ( Bad Request )\r\n\r\nSeu construtor possui:\r\n     message: Mensagem mostrado no erro\r\n     trace: Código de erro para restreio ao debuggar\r\n     stack: Caminho do erro ( opcional )",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"statusCode": {
+						"$ref": "#/components/schemas/HttpStatusCode"
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Campo é obrigatório.",
+					"trace": "EXP9999",
+					"stack": null
+				}
+			},
+			"UnauthorizedError": {
+				"description": "Classe customizada para erros 401 ( unauthorized )\r\nSua mensagem é sempre a mesma",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"statusCode": {
+						"$ref": "#/components/schemas/HttpStatusCode"
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Ação não autorizada.",
+					"trace": "EXP9999"
+				}
+			},
+			"NotFoundError": {
+				"description": "Classe customizada para erros 404 ( Not Found )\r\n *\r\nSeu construtor possui:\r\n     message: Mensagem mostrado no erro\r\n     trace: Código de erro para restreio ao debuggar\r\n     stack: Caminho do erro ( opcional )",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"statusCode": {
+						"$ref": "#/components/schemas/HttpStatusCode"
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Item não encontrado.",
+					"trace": "EXP9999",
+					"stack": null
+				}
+			},
+			"SignupDto": {
+				"properties": {
+					"username": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"username": "john_doe"
+				}
+			}
+		},
+		"securitySchemes": {
+			"Bearer": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	"info": {
+		"title": "chat-socket-nodejs",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/user/signup": {
+			"post": {
+				"operationId": "signup",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserCreateData"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"username": "john_doe",
+											"createdAt": "2025-02-27T02:35:04.742Z"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateError"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UnauthorizedError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Usuário"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SignupDto"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:4000/api/v1",
+			"description": "Local development"
+		}
+	]
+}

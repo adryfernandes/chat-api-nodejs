@@ -1,19 +1,16 @@
 // models/message.model.ts
 import mongoose from 'mongoose';
 
-export interface IUserInput {
+export interface UserCreateData {
   username: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
-export interface IUser extends IUserInput, mongoose.Document {
-  username: string;
-  createdAt: Date;
-}
+export interface UserDocument extends UserCreateData, mongoose.Document {}
 
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema<UserDocument>({
   username: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model<IUser>('User', userSchema);
+export default mongoose.model<UserDocument>('User', userSchema);

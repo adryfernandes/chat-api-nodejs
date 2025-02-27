@@ -1,18 +1,18 @@
 // models/message.model.ts
 import mongoose from 'mongoose';
 
-export interface IMessageInput {
+export interface CreateMessageData {
   content: string;
   sender: string;
   receiver: string;
 }
 
-export interface IMessage extends IMessageInput, mongoose.Document {
+export interface MessageDocument extends CreateMessageData, mongoose.Document {
   createdAt: Date;
   read: boolean;
 }
 
-const messageSchema = new mongoose.Schema<IMessage>({
+const messageSchema = new mongoose.Schema<MessageDocument>({
   content: { type: String, required: true },
   sender: { type: String, required: true },
   receiver: { type: String, required: true },
@@ -20,4 +20,4 @@ const messageSchema = new mongoose.Schema<IMessage>({
   read: { type: Boolean, default: false },
 });
 
-export default mongoose.model<IMessage>('Message', messageSchema);
+export default mongoose.model<MessageDocument>('Message', messageSchema);
