@@ -19,9 +19,13 @@ export class UserService {
   @Response<ValidateError>(HttpStatusCode.BadRequest, 'Bad Request')
   @Response<UnauthorizedError>(HttpStatusCode.Unauthorized, 'Unauthorized')
   @Response<NotFoundError>(HttpStatusCode.NotFound, 'Not Found')
-  static async signup(@Body() input: SignupDto) {
-    await validateDto(input, 'ERRXXX');
+  static async signup(@Body() input: SignupDto): Promise<UserCreateData> {
+    const userExist = await this.userRepository.exist({ username: input.username });
+    if (userExist) {
+      throw new ValidateError('Nome de usuário já existe.', 'ERRXXX');
+    }
 
+    await validateDto(input, 'ERRXXX');
     return await this.userRepository.create(input);
   }
 }

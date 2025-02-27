@@ -6,8 +6,8 @@ import { IsNotEmpty, MinLength } from 'class-validator';
  * }
  */
 export class SignupDto {
-  @IsNotEmpty({ message: 'O username é obrigatório.' })
-  @MinLength(3, { message: 'O username deve ter no mínimo 3 caracteres.' })
+  @MinLength(3, { message: 'O nome de usuário deve ter no mínimo 3 caracteres.' })
+  @IsNotEmpty({ message: 'O nome de usuário é obrigatório.' })
   username: string;
 
   constructor({ username }) {

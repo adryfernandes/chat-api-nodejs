@@ -9,7 +9,7 @@ export interface UserCreateData {
 export interface UserDocument extends UserCreateData, mongoose.Document {}
 
 const userSchema = new mongoose.Schema<UserDocument>({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   createdAt: { type: Date, default: Date.now },
 });
 

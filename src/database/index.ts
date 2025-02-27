@@ -12,3 +12,11 @@ export const connectDB = async () => {
     throw new Error(err.message);
   }
 };
+
+export const desconnectDB = async () => {
+  try {
+    await mongoose.connection.close();
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
