@@ -1,9 +1,8 @@
+import UserController from '@/controller/user/userController';
 import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', (_, res) => {
-  res.send({ respost: 'oi' });
-});
+router.post('/signup', UserController.signup);
 
 export { router as userRouter };

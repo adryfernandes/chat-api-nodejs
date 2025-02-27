@@ -1,10 +1,13 @@
 import http from 'http';
-import { PORT } from './config/config';
+import { PORT } from './config';
 import { createApp } from './app';
 import { initSocket } from './sockets';
+import { connectDB } from './database';
 
-const startServer = () => {
+const startServer = async () => {
   try {
+    await connectDB();
+
     const app = createApp();
     const server = http.createServer(app);
 
