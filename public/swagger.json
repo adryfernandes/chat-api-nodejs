@@ -7,18 +7,28 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"UserCreateData": {
+			"UserDocument": {
 				"properties": {
+					"_id": {
+						"type": "string"
+					},
 					"username": {
 						"type": "string"
 					},
 					"createdAt": {
 						"type": "string",
 						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
 					}
 				},
 				"required": [
-					"username"
+					"_id",
+					"username",
+					"createdAt",
+					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -186,7 +196,7 @@
 					"stack": null
 				}
 			},
-			"SignupDto": {
+			"CreateUserDto": {
 				"properties": {
 					"username": {
 						"type": "string"
@@ -228,13 +238,15 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UserCreateData"
+									"$ref": "#/components/schemas/UserDocument"
 								},
 								"examples": {
 									"Example 1": {
 										"value": {
+											"_id": "77b0a9da-a1a4-4a6f-a66e-d2faf75dbe8e",
 											"username": "john_doe",
-											"createdAt": "2025-02-27T02:35:04.742Z"
+											"createdAt": "2025-02-27T22:41:44.455Z",
+											"updatedAt": "2025-02-27T22:41:44.457Z"
 										}
 									}
 								}
@@ -282,7 +294,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/SignupDto"
+								"$ref": "#/components/schemas/CreateUserDto"
 							}
 						}
 					}

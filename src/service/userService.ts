@@ -1,31 +1,31 @@
-import { SignupDto } from '@/database/dto/signupDto';
-import { UserCreateData } from '@/database/models/userModel';
-import UserRepository from '@/database/repositories/userRepository';
+import { SignupDto } from '@/dto';
+import { Repository, UserDocument, UserModel } from 'models';
 import { NotFoundError, UnauthorizedError, ValidateError } from '@/errors';
 import { userExample } from '@/swagger/userExample';
-import { validateDto } from '@/utils/validates';
+import { validateDto } from '@/utils/validateDto';
 import { HttpStatusCode } from 'axios';
 import { Body, Example, OperationId, Post, Response, Route, SuccessResponse, Tags } from 'tsoa';
 
 @Route('/user')
 @Tags('Usuário')
 export class UserService {
-  private static userRepository = new UserRepository();
+  private static userRepository = new Repository<UserDocument>(UserModel);
 
   @Post('/signup')
   @OperationId('signup')
   @SuccessResponse(HttpStatusCode.Ok, 'Ok')
-  @Example<UserCreateData>(userExample)
+  @Example<UserDocument>(userExample)
   @Response<ValidateError>(HttpStatusCode.BadRequest, 'Bad Request')
   @Response<UnauthorizedError>(HttpStatusCode.Unauthorized, 'Unauthorized')
   @Response<NotFoundError>(HttpStatusCode.NotFound, 'Not Found')
-  static async signup(@Body() input: SignupDto): Promise<UserCreateData> {
+  static async signup(@Body() input: SignupDto): Promise<UserDocument> {
+    await validateDto(input, 'ERRXXX');
+
     const userExist = await this.userRepository.exist({ username: input.username });
     if (userExist) {
       throw new ValidateError('Nome de usuário já existe.', 'ERRXXX');
     }
 
-    await validateDto(input, 'ERRXXX');
     return await this.userRepository.create(input);
   }
 }

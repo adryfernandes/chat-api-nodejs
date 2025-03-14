@@ -1,10 +1,10 @@
 {
   "name": "chat-socket-nodejs",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
     "lint": "tsc --noEmit && eslint ./**/*.{js,ts}",
     "test": "jest",
     "doc:generate": "tsoa spec"
@@ -17,15 +17,18 @@
     "axios": "1.8.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
+    "cookie-parser": "^1.4.7",
     "cors": "2.8.5",
     "dotenv": "16.4.7",
     "express": "4.21.2",
     "mongoose": "8.11.0",
+    "set-cookie-parser": "^2.7.1",
     "socket.io": "4.8.1",
     "swagger-ui-express": "5.0.1",
     "ts-jest": "^29.2.6",
     "tsoa": "6.6.0",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "models": "git@github.com:adryfernandes/chat-module-nodejs.git"
   },
   "devDependencies": {
     "@types/cors": "2.8.17",
